@@ -240,7 +240,7 @@ export class SurfaceScene extends Phaser.Scene {
   }
 
   // ------------------------------------------------------------------ loop
-  update(_t: number, deltaMs: number) {
+  override update(_t: number, deltaMs: number) {
     const st = m02Store.get();
     const body = this.player.body as Phaser.Physics.Arcade.Body;
     const blocked = st.overlay !== null || st.phase !== "surface";

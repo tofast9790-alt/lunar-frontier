@@ -160,7 +160,7 @@ export class DescentScene extends Phaser.Scene {
   }
 
   // ------------------------------------------------------------------ loop
-  update(_time: number, deltaMs: number) {
+  override update(_time: number, deltaMs: number) {
     const st = m02Store.get();
     const flying = st.descent.status === "flying" && !this.done;
     if (flying && st.overlay === null) {
