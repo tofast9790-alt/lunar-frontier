@@ -82,8 +82,20 @@ export function Gauge({
 
 export function ScienceNote({ id }: { id: StationId }) {
   const { notesRead } = useMission();
+  return <NoteCard note={SCIENCE_NOTES[id]} read={notesRead[id]} onOpen={() => markNoteRead(id)} />;
+}
+
+/** Expandable science note used by every mission. */
+export function NoteCard({
+  note,
+  read,
+  onOpen,
+}: {
+  note: { title: string; body: string; simplified?: string };
+  read: boolean;
+  onOpen: () => void;
+}) {
   const [open, setOpen] = useState(false);
-  const note = SCIENCE_NOTES[id];
   return (
     <div className="rounded-md border border-primary/30 bg-primary/5">
       <button
@@ -92,14 +104,14 @@ export function ScienceNote({ id }: { id: StationId }) {
         aria-expanded={open}
         onClick={() => {
           setOpen((o) => !o);
-          markNoteRead(id);
+          onOpen();
         }}
       >
         <span className="flex items-center gap-2 text-primary">
-          <BookOpen className="size-4" aria-hidden /> Science note: {note.title}
+          <BookOpen className="size-4 shrink-0" aria-hidden /> Science note: {note.title}
         </span>
         <span className="flex items-center gap-2">
-          {notesRead[id] && <span className="font-mono text-[10px] uppercase text-success">read</span>}
+          {read && <span className="font-mono text-[10px] uppercase text-success">read</span>}
           <ChevronDown className={cn("size-4 transition-transform", open && "rotate-180")} aria-hidden />
         </span>
       </button>
@@ -124,12 +136,14 @@ export function ConfirmBar({
   label,
   onConfirm,
   onClose,
+  returnLabel = "Return to Prep Bay",
 }: {
   ready: boolean;
   done: boolean;
   label: string;
   onConfirm: () => void;
   onClose: () => void;
+  returnLabel?: string;
 }) {
   if (done) {
     return (
@@ -138,7 +152,7 @@ export function ConfirmBar({
           <CheckCircle2 className="size-4" aria-hidden /> Check verified and logged
         </span>
         <Button variant="hud" onClick={onClose} data-autofocus>
-          Return to Prep Bay
+          {returnLabel}
         </Button>
       </div>
     );

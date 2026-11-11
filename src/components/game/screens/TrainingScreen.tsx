@@ -3,7 +3,7 @@ import { Bot, ChevronDown, Hand, Pause } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { INTERACTABLES, MISSION_01, STATION_TITLES } from "@/game/missions/mission01/data";
 import { checksDone } from "@/game/missions/mission01/scoring";
-import { openOverlay, useMission, type MissionState } from "@/game/missions/mission01/state";
+import { advanceComms, openOverlay, useMission, type MissionState } from "@/game/missions/mission01/state";
 import { STATION_IDS, type InteractableId } from "@/game/missions/mission01/types";
 import { PhaserGame } from "@/game/phaser/PhaserGame";
 import { useSave } from "@/game/persistence/save";
@@ -100,7 +100,7 @@ export function TrainingScreen() {
       {/* Comms + controls */}
       <div className="pointer-events-none absolute inset-x-0 bottom-0 flex items-end justify-between gap-3 p-3">
         <div className="pointer-events-auto w-full max-w-md">
-          <CommsPanel />
+          <CommsPanel queue={s.commsQueue} log={s.commsLog} onAdvance={advanceComms} />
         </div>
         <div className="pointer-events-auto flex flex-col items-end gap-2">
           {settings.showTouchPad && <TouchPad />}
