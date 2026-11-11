@@ -1,15 +1,24 @@
 import { useState } from "react";
 import { ChevronRight, Radio, ScrollText } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { SPEAKER_NAMES } from "@/game/missions/mission01/dialogue";
-import { advanceComms, useMission } from "@/game/missions/mission01/state";
+import type { DialogueLine, Speaker } from "@/game/core/dialogue";
+import { SPEAKER_NAMES as M01_NAMES } from "@/game/missions/mission01/dialogue";
 import { Portrait } from "./Portrait";
 import { useTypewriter } from "./Typewriter";
 import { cn } from "@/lib/utils";
 
 /** Non-blocking comms panel: the player can keep moving while messages play. */
-export function CommsPanel() {
-  const { commsQueue, commsLog } = useMission();
+export function CommsPanel({
+  queue: commsQueue,
+  log: commsLog,
+  onAdvance: advanceComms,
+  names: SPEAKER_NAMES = M01_NAMES,
+}: {
+  queue: DialogueLine[];
+  log: DialogueLine[];
+  onAdvance: () => void;
+  names?: Record<Speaker, string>;
+}) {
   const [showLog, setShowLog] = useState(false);
   const line = commsQueue[0];
   const { shown, done, finish } = useTypewriter(line?.text ?? "");

@@ -1,24 +1,36 @@
 import { useEffect, useRef } from "react";
 import type PhaserType from "phaser";
-import { attachMovementKeys } from "@/game/core/input";
+import { attachMovementKeys, attachThrustKey } from "@/game/core/input";
+
+export type SceneKey = "training" | "descent" | "surface";
+
+const LABELS: Record<SceneKey, string> = {
+  training: "Prep Bay training room. Move with WASD or arrow keys, interact with E.",
+  descent: "Top-down lunar descent. Hold Space for the main engine, WASD or arrow keys for side thrusters.",
+  surface: "Lunar surface beside the lander. Move with WASD or arrow keys, interact with E.",
+};
+
+async function loadScene(key: SceneKey): Promise<typeof PhaserType.Scene> {
+  if (key === "descent") return (await import("./DescentScene")).DescentScene;
+  if (key === "surface") return (await import("./SurfaceScene")).SurfaceScene;
+  return (await import("./TrainingScene")).TrainingScene;
+}
 
 /**
  * Mounts one Phaser game into a div. Phaser is imported lazily (browser only) and
  * destroyed on unmount, so React re-renders/StrictMode never create duplicate canvases.
  */
-export function PhaserGame() {
+export function PhaserGame({ scene = "training" }: { scene?: SceneKey }) {
   const hostRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     let game: PhaserType.Game | null = null;
     let cancelled = false;
     const detachKeys = attachMovementKeys();
+    const detachThrust = scene === "descent" ? attachThrustKey() : () => {};
 
     (async () => {
-      const [{ default: Phaser }, { TrainingScene }] = await Promise.all([
-        import("phaser"),
-        import("./TrainingScene"),
-      ]);
+      const [{ default: Phaser }, SceneClass] = await Promise.all([import("phaser"), loadScene(scene)]);
       try {
         await Promise.race([
           document.fonts.load('500 12px "IBM Plex Mono"'),
@@ -39,24 +51,18 @@ export function PhaserGame() {
         physics: { default: "arcade", arcade: { debug: false } },
         input: { keyboard: false },
         render: { antialias: true, roundPixels: false },
-        scene: [TrainingScene],
+        scene: [SceneClass],
       });
     })();
 
     return () => {
       cancelled = true;
       detachKeys();
+      detachThrust();
       game?.destroy(true);
       game = null;
     };
-  }, []);
+  }, [scene]);
 
-  return (
-    <div
-      ref={hostRef}
-      className="absolute inset-0"
-      role="application"
-      aria-label="Prep Bay training room. Move with WASD or arrow keys, interact with E."
-    />
-  );
+  return <div ref={hostRef} className="absolute inset-0" role="application" aria-label={LABELS[scene]} />;
 }

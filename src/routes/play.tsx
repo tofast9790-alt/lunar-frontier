@@ -91,7 +91,9 @@ function PlayPage() {
       {o?.kind === "station" && <StationOverlay key={o.id} id={o.id} onClose={closePanel} />}
       {o?.kind === "quiz" && <QuizOverlay onClose={closePanel} />}
       {o?.kind === "ares" && <AresOverlay onClose={closePanel} />}
-      {o?.kind === "pause" && <PauseOverlay />}
+      {o?.kind === "pause" && (
+        <PauseOverlay onResume={closeOverlay} onRestart={() => startMission("briefing")} missionCode="Mission 01" />
+      )}
     </main>
   );
 }

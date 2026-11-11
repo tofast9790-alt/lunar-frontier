@@ -1,6 +1,6 @@
 import elenaImg from "@/assets/intro-elena.jpg";
 import aresImg from "@/assets/intro-ares.jpg";
-import type { Speaker } from "@/game/missions/mission01/types";
+import type { Speaker } from "@/game/core/dialogue";
 import { cn } from "@/lib/utils";
 
 const SRC: Record<Speaker, { src: string; pos: string } | null> = {
