@@ -55,9 +55,8 @@ describe("Mission 02 descent physics", () => {
   it("a careful pilot can land safely with fuel to spare", () => {
     const s = fly(autopilot);
     const r = evaluateTouchdown(s);
-    console.log("autopilot", JSON.stringify(r));
     expect(r.ok).toBe(true);
-    expect(r.fuel).toBeGreaterThan(10);
+    expect(r.fuel).toBeGreaterThan(20);
   });
 
   it("never touching the engine is a hard-landing abort", () => {

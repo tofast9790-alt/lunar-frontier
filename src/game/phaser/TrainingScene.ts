@@ -7,6 +7,7 @@ import { allChecksDone } from "@/game/missions/mission01/scoring";
 import type { InteractableId, StationId } from "@/game/missions/mission01/types";
 import { STATION_IDS } from "@/game/missions/mission01/types";
 import { C, CSS } from "./palette";
+import { makeCommonTextures } from "./textures";
 
 export const WORLD_W = 1280;
 export const WORLD_H = 800;
@@ -107,26 +108,7 @@ export class TrainingScene extends Phaser.Scene {
 
   // ---------------------------------------------------------------- textures
   private makeTextures() {
-    if (this.textures.exists("astronaut")) return;
-    const g = this.make.graphics({ x: 0, y: 0 }, false);
-    // Astronaut, top-down, facing up (helmet visor toward -y).
-    g.fillStyle(C.steel, 1).fillRoundedRect(13, 25, 22, 17, 4); // life-support backpack
-    g.fillStyle(C.moonDark, 1).fillRect(16, 29, 16, 2).fillRect(16, 34, 16, 2);
-    g.fillStyle(C.white, 1).fillEllipse(24, 26, 38, 24); // shoulders / torso
-    g.lineStyle(2, C.moonDark, 1).strokeEllipse(24, 26, 38, 24);
-    g.fillStyle(C.white, 1).fillCircle(6, 24, 6).fillCircle(42, 24, 6); // arms
-    g.lineStyle(1.5, C.moonDark, 1).strokeCircle(6, 24, 6).strokeCircle(42, 24, 6);
-    g.fillStyle(C.cyan, 1).fillCircle(9, 21, 2); // mission patch
-    g.fillStyle(C.white, 1).fillCircle(24, 19, 11); // helmet
-    g.lineStyle(2, C.moonDark, 1).strokeCircle(24, 19, 11);
-    g.fillStyle(C.amber, 1).fillEllipse(24, 13, 16, 8); // gold visor
-    g.fillStyle(C.white, 0.7).fillEllipse(20, 12, 4, 2);
-    g.generateTexture("astronaut", 48, 48);
-    g.clear();
-
-    g.fillStyle(0xffffff, 1).fillCircle(4, 4, 4);
-    g.generateTexture("dot", 8, 8);
-    g.destroy();
+    makeCommonTextures(this);
   }
 
   // ------------------------------------------------------------------ room

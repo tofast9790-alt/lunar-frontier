@@ -8,8 +8,8 @@ export const DESCENT = {
   engineAccel: 3.4, // m/s² at full throttle (sim)
   rcsAccel: 1.2, // m/s² sideways thrusters (sim)
   fuelMax: 100, // %
-  engineBurn: 2.5, // % per second at full throttle (sim)
-  rcsBurn: 0.8, // % per second while any thruster fires (sim)
+  engineBurn: 2.2, // % per second at full throttle (sim)
+  rcsBurn: 0.7, // % per second while any thruster fires (sim)
   startAlt: 320,
   startVs: -14,
   start: { x: -95, y: 55, vx: 2.2, vy: -1.4 },
