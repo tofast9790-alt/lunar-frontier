@@ -219,7 +219,7 @@ function StarField({ seed, offset, onAligned, aligned }: { seed: number; offset:
             value={angle}
             disabled={aligned}
             onChange={(e) => setAngle(Number(e.target.value))}
-            className="mt-1 block w-full accent-[var(--amber)]"
+            className="mt-1 block w-full accent-amber"
             aria-label="Star tracker rotation"
           />
         </label>
