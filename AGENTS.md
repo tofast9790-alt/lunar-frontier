@@ -28,3 +28,11 @@ use the editor.
   own key and store it in Secrets.
 - **Secrets.** Lovable manages them. Do not put secret values in the repo.
 <!-- LOVABLE:END -->
+
+## Project rules
+- Game world is Phaser 3, mounted only via `src/game/phaser/PhaserGame.tsx` (lazy browser import, destroyed on unmount) — Phaser touches `window` at import and must never run during SSR.
+- Phaser keyboard input is disabled; movement keys come from `src/game/core/input.ts` window listeners so focused buttons never swallow input and form fields never move the player.
+- React UI and the Phaser scene share state through plain observable stores (`src/game/core/store.ts`); mission logic lives in `src/game/missions/<mission>/`, never inside scene or component files.
+- Scoring/authorization rules are pure functions in `scoring.ts` with tests in `rules.test.ts`; change rules there, not in UI.
+- Saves are versioned (`SAVE_KEY` + `version`) in `src/game/persistence/save.ts`; add migrations there when the shape changes.
+- New missions register in `src/game/missions/registry.ts`; only `availability: "playable"` missions may be launched.
