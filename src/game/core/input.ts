@@ -60,6 +60,47 @@ export function setVirtualDir(dir: Dir, pressed: boolean) {
 export function clearMovement() {
   keyboard.clear();
   virtual.clear();
+  thrustKey = false;
+  thrustVirtual = false;
+}
+
+// ---------------------------------------------------------------- engine thrust
+let thrustKey = false;
+let thrustVirtual = false;
+
+/** Space = main engine while a descent is mounted. Swallows Space so focused buttons never fire. */
+export function attachThrustKey(): () => void {
+  const down = (e: KeyboardEvent) => {
+    if (isEditableTarget(e.target) || e.code !== "Space") return;
+    e.preventDefault();
+    thrustKey = true;
+  };
+  const up = (e: KeyboardEvent) => {
+    if (e.code !== "Space") return;
+    if (!isEditableTarget(e.target)) e.preventDefault();
+    thrustKey = false;
+  };
+  const clear = () => {
+    thrustKey = false;
+    thrustVirtual = false;
+  };
+  window.addEventListener("keydown", down);
+  window.addEventListener("keyup", up);
+  window.addEventListener("blur", clear);
+  return () => {
+    window.removeEventListener("keydown", down);
+    window.removeEventListener("keyup", up);
+    window.removeEventListener("blur", clear);
+    clear();
+  };
+}
+
+export function setVirtualThrust(on: boolean) {
+  thrustVirtual = on;
+}
+
+export function isThrusting(): boolean {
+  return thrustKey || thrustVirtual;
 }
 
 /** Normalised movement vector (-1..1). */
