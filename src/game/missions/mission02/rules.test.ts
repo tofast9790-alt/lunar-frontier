@@ -40,7 +40,8 @@ function fly(pilot: (s: DescentState) => { thrust: boolean; rcsX: number; rcsY: 
 
 describe("Mission 02 descent physics", () => {
   it("uses real lunar gravity: free fall gains 1.62 m/s per second", () => {
-    const s = stepDescent(initialDescent(), { thrust: false, rcsX: 0, rcsY: 0 }, 1);
+    let s = initialDescent();
+    for (let i = 0; i < 4; i++) s = stepDescent(s, { thrust: false, rcsX: 0, rcsY: 0 }, 0.25);
     expect(s.vs).toBeCloseTo(DESCENT.startVs - 1.62, 5);
     expect(s.fuel).toBe(100);
   });
@@ -54,6 +55,7 @@ describe("Mission 02 descent physics", () => {
   it("a careful pilot can land safely with fuel to spare", () => {
     const s = fly(autopilot);
     const r = evaluateTouchdown(s);
+    console.log("autopilot", JSON.stringify(r));
     expect(r.ok).toBe(true);
     expect(r.fuel).toBeGreaterThan(10);
   });
