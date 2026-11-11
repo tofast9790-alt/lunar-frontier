@@ -149,7 +149,6 @@ export class SurfaceScene extends Phaser.Scene {
     g.fillStyle(0xc3cad4, 0.8).fillCircle(x - r * 0.4, y - r * 0.3, r * 0.28);
     if (r > 10) {
       const z = this.add.zone(x, y, r * 1.6, r * 1.6);
-      this.physics.add.existing(z, true);
       this.obstacles.add(z);
     }
   }
@@ -173,7 +172,6 @@ export class SurfaceScene extends Phaser.Scene {
     g.fillStyle(C.amberDeep, 1).fillRect(x - 14, y + 66, 4, 54).fillRect(x + 10, y + 66, 4, 54);
     for (let i = 0; i < 5; i++) g.fillRect(x - 14, y + 72 + i * 11, 28, 3);
     const body = this.add.zone(x, y, 150, 150);
-    this.physics.add.existing(body, true);
     this.obstacles.add(body);
   }
 
