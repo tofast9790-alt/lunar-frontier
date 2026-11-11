@@ -8,6 +8,8 @@ export interface MissionMeta {
   title: string;
   summary: string;
   availability: MissionAvailability;
+  /** Page that plays this mission. */
+  path: "/play" | "/mission-02";
   /** Mission that must be completed before this one unlocks. */
   requires?: string;
 }
@@ -22,14 +24,16 @@ export const MISSIONS: MissionMeta[] = [
     title: "The Selection",
     summary: "Prepare in the training bay, verify life-support equipment and earn launch authorization.",
     availability: "playable",
+    path: "/play",
   },
   {
     id: "m02",
     number: 2,
     chapter: "Chapter 1 — The Arrival",
     title: "Touchdown",
-    summary: "Descend toward the lunar south polar region and land safely. Coming in a future update.",
-    availability: "in-development",
+    summary: "Run pre-descent checks, pick a safe site, fly a top-down landing and plant the first navigation beacon.",
+    availability: "playable",
+    path: "/mission-02",
     requires: "m01",
   },
 ];
