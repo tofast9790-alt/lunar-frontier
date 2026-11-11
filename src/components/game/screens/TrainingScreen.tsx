@@ -104,7 +104,7 @@ export function TrainingScreen() {
         </div>
         <div className="pointer-events-auto flex flex-col items-end gap-2">
           {settings.showTouchPad && <TouchPad />}
-          <p className="panel hidden px-2 py-1 font-mono text-[11px] text-muted-foreground md:block">
+          <p className="panel hidden px-2 py-1 font-mono text-[11px] text-muted-foreground xl:block">
             WASD/Arrows move · E interact · H ARES · Esc pause
           </p>
         </div>
