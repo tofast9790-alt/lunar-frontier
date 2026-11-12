@@ -30,7 +30,7 @@ export function PhaserGame({ scene = "training" }: { scene?: SceneKey }) {
     const detachThrust = scene === "descent" ? attachThrustKey() : () => {};
 
     (async () => {
-      const [{ default: Phaser }, SceneClass] = await Promise.all([import("phaser"), loadScene(scene)]);
+      const [Phaser, SceneClass] = await Promise.all([import("phaser"), loadScene(scene)]);
       try {
         await Promise.race([
           document.fonts.load('500 12px "IBM Plex Mono"'),

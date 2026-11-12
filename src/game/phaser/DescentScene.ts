@@ -1,4 +1,4 @@
-import Phaser from "phaser";
+import * as Phaser from "phaser";
 import { getMoveVector, isThrusting } from "@/game/core/input";
 import { saveStore } from "@/game/persistence/save";
 import {

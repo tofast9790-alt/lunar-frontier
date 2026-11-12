@@ -1,4 +1,4 @@
-import Phaser from "phaser";
+import * as Phaser from "phaser";
 import { getMoveVector } from "@/game/core/input";
 import { saveStore } from "@/game/persistence/save";
 import { INTERACTABLES } from "@/game/missions/mission01/data";
