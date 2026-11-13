@@ -98,9 +98,13 @@ export function BeaconPanel({ onClose }: { onClose: () => void }) {
         </p>
         <ol className="space-y-2">
           <Step n={1} title="Plant the mast in the regolith" done={mast} active={!mast}>
-            <Button variant="mission" size="sm" onClick={() => setMast(true)} data-autofocus>
-              Drive mast into the ground
-            </Button>
+            {mast ? (
+              <p className="text-xs text-success">Mast planted and steady.</p>
+            ) : (
+              <Button variant="mission" size="sm" onClick={() => setMast(true)} data-autofocus>
+                Drive mast into the ground
+              </Button>
+            )}
           </Step>
           <Step n={2} title="Set the solar panel tilt" done={deployed} active={mast && !deployed}>
             <ChoiceRow label="Panel tilt" options={TILTS} value={tilt} onChange={setTilt} disabled={deployed} />

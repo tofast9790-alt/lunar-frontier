@@ -37,11 +37,14 @@ export function CompleteScreen() {
         <section className="panel grid overflow-hidden sm:grid-cols-[1fr_1.2fr]">
           <img src={outpostImg} alt="Lunar south polar outpost at low sun angle" loading="lazy" width={1600} height={912} className="h-48 w-full object-cover sm:h-full" />
           <div className="space-y-2 p-5">
-            <div className="hud-label text-amber">Next · in development</div>
+            <div className="hud-label text-amber">Next mission · unlocked</div>
             <h2 className="text-2xl font-semibold">Mission 02 — Touchdown</h2>
             <p className="text-sm leading-relaxed text-muted-foreground">
-              Your lander approaches the lunar south polar region, where the Sun barely rises above the horizon and shadows stretch for kilometres. Coming in a future update.
+              Your lander approaches the lunar south polar region, where the Sun barely rises above the horizon and shadows stretch for kilometres. Pick a safe site and land it yourself.
             </p>
+            <Button variant="mission" size="lg" className="mt-2" asChild>
+              <Link to="/mission-02">Start Mission 02</Link>
+            </Button>
           </div>
         </section>
 

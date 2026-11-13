@@ -36,3 +36,5 @@ use the editor.
 - Scoring/authorization rules are pure functions in `scoring.ts` with tests in `rules.test.ts`; change rules there, not in UI.
 - Saves are versioned (`SAVE_KEY` + `version`) in `src/game/persistence/save.ts`; add migrations there when the shape changes.
 - New missions register in `src/game/missions/registry.ts`; only `availability: "playable"` missions may be launched.
+
+- Each playable mission has its own route (registry `path`) that loads the save itself and shows a locked notice until `missionRecordState` unlocks it — child effects run before the root's save load.

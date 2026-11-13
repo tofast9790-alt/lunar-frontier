@@ -205,11 +205,11 @@ export function DescentScreen() {
       )}
 
       {/* Comms + controls */}
-      <div className="pointer-events-none absolute inset-x-0 bottom-0 flex items-end justify-between gap-3 p-3">
+      <div className="pointer-events-none absolute inset-x-0 bottom-0 flex flex-col-reverse gap-2 p-3 sm:flex-row sm:items-end sm:justify-between sm:gap-3">
         <div className="pointer-events-auto w-full max-w-md">
           <M02Comms />
         </div>
-        <div className="pointer-events-auto flex flex-col items-end gap-2">
+        <div className="pointer-events-auto flex flex-col items-end gap-2 self-end">
           <div className="flex items-end gap-3">
             {settings.showTouchPad && <TouchPad />}
             <ThrustButton />

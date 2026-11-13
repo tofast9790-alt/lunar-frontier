@@ -79,11 +79,11 @@ export function SurfaceScreen() {
         </div>
       )}
 
-      <div className="pointer-events-none absolute inset-x-0 bottom-0 flex items-end justify-between gap-3 p-3">
+      <div className="pointer-events-none absolute inset-x-0 bottom-0 flex flex-col-reverse gap-2 p-3 sm:flex-row sm:items-end sm:justify-between sm:gap-3">
         <div className="pointer-events-auto w-full max-w-md">
           <M02Comms />
         </div>
-        <div className="pointer-events-auto flex flex-col items-end gap-2">
+        <div className="pointer-events-auto flex flex-col items-end gap-2 self-end">
           {settings.showTouchPad && <TouchPad />}
           <p className="panel hidden px-2 py-1 font-mono text-[11px] text-muted-foreground xl:block">
             WASD/Arrows walk · E interact · H ARES · Esc pause
