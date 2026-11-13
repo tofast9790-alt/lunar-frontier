@@ -3,7 +3,10 @@ import { CheckCircle2, Lock, PlayCircle } from "lucide-react";
 import { PageShell } from "@/components/layout/PageShell";
 import { Button } from "@/components/ui/button";
 import { MISSIONS, PLANNED_MISSION_COUNT, missionRecordState } from "@/game/missions/registry";
-import { MAX_SCORE } from "@/game/missions/mission01/scoring";
+import { MAX_SCORE as M01_MAX } from "@/game/missions/mission01/scoring";
+import { MAX_SCORE as M02_MAX } from "@/game/missions/mission02/scoring";
+
+const MAX_SCORES: Record<string, number> = { m01: M01_MAX, m02: M02_MAX };
 import { useSave } from "@/game/persistence/save";
 import { cn } from "@/lib/utils";
 
@@ -62,14 +65,17 @@ function Records() {
                 {rec?.completed && (
                   <div className="mt-1 text-sm">
                     Best <span className="font-display text-lg text-amber">{rec.bestScore}</span>
-                    <span className="text-muted-foreground">/{MAX_SCORE}</span>
+                    <span className="text-muted-foreground">/{MAX_SCORES[m.id] ?? 1000}</span>
                     <div className="text-xs text-muted-foreground">Completed {rec.timesCompleted}×</div>
                   </div>
                 )}
-                {m.availability === "playable" && (
+                {state !== "locked" && (
                   <Button variant="mission" size="sm" className="mt-2" asChild>
-                    <Link to="/play">{state === "completed" ? "Replay" : "Play"}</Link>
+                    <Link to={m.path}>{state === "completed" ? "Replay" : "Play"}</Link>
                   </Button>
+                )}
+                {state === "locked" && m.availability === "playable" && m.requires && (
+                  <div className="mt-1 text-xs text-muted-foreground">Complete Mission {m.requires.replace("m", "")} to unlock</div>
                 )}
               </div>
             </li>

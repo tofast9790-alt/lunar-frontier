@@ -11,6 +11,7 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as AcademyRouteImport } from './routes/academy'
+import { Route as Mission02RouteImport } from './routes/mission-02'
 import { Route as PlayRouteImport } from './routes/play'
 import { Route as RecordsRouteImport } from './routes/records'
 import { Route as SettingsRouteImport } from './routes/settings'
@@ -23,6 +24,11 @@ const IndexRoute = IndexRouteImport.update({
 const AcademyRoute = AcademyRouteImport.update({
   id: '/academy',
   path: '/academy',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const Mission02Route = Mission02RouteImport.update({
+  id: '/mission-02',
+  path: '/mission-02',
   getParentRoute: () => rootRouteImport,
 } as any)
 const PlayRoute = PlayRouteImport.update({
@@ -44,6 +50,7 @@ const SettingsRoute = SettingsRouteImport.update({
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/academy': typeof AcademyRoute
+  '/mission-02': typeof Mission02Route
   '/play': typeof PlayRoute
   '/records': typeof RecordsRoute
   '/settings': typeof SettingsRoute
@@ -51,6 +58,7 @@ export interface FileRoutesByFullPath {
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/academy': typeof AcademyRoute
+  '/mission-02': typeof Mission02Route
   '/play': typeof PlayRoute
   '/records': typeof RecordsRoute
   '/settings': typeof SettingsRoute
@@ -59,21 +67,31 @@ export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/academy': typeof AcademyRoute
+  '/mission-02': typeof Mission02Route
   '/play': typeof PlayRoute
   '/records': typeof RecordsRoute
   '/settings': typeof SettingsRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/academy' | '/play' | '/records' | '/settings'
+  fullPaths:
+    '/' | '/academy' | '/mission-02' | '/play' | '/records' | '/settings'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/academy' | '/play' | '/records' | '/settings'
-  id: '__root__' | '/' | '/academy' | '/play' | '/records' | '/settings'
+  to: '/' | '/academy' | '/mission-02' | '/play' | '/records' | '/settings'
+  id:
+    | '__root__'
+    | '/'
+    | '/academy'
+    | '/mission-02'
+    | '/play'
+    | '/records'
+    | '/settings'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AcademyRoute: typeof AcademyRoute
+  Mission02Route: typeof Mission02Route
   PlayRoute: typeof PlayRoute
   RecordsRoute: typeof RecordsRoute
   SettingsRoute: typeof SettingsRoute
@@ -93,6 +111,13 @@ declare module '@tanstack/react-router' {
       path: '/academy'
       fullPath: '/academy'
       preLoaderRoute: typeof AcademyRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/mission-02': {
+      id: '/mission-02'
+      path: '/mission-02'
+      fullPath: '/mission-02'
+      preLoaderRoute: typeof Mission02RouteImport
       parentRoute: typeof rootRouteImport
     }
     '/play': {
@@ -122,6 +147,7 @@ declare module '@tanstack/react-router' {
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AcademyRoute: AcademyRoute,
+  Mission02Route: Mission02Route,
   PlayRoute: PlayRoute,
   RecordsRoute: RecordsRoute,
   SettingsRoute: SettingsRoute,

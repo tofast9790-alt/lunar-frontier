@@ -69,14 +69,16 @@ describe("Mission 01 rules", () => {
     expect(JSON.parse(localStorage.getItem(SAVE_KEY)!).missions.m01.completed).toBe(true);
   });
 
-  it("records show Mission 01 unlocked, then completed; Mission 02 stays locked", () => {
+  it("records show Mission 01 unlocked, then completed; Mission 02 unlocks only after Mission 01", () => {
     const m01 = MISSIONS[0]!;
     const m02 = MISSIONS[1]!;
     expect(missionRecordState(m01, {})).toBe("unlocked");
     expect(missionRecordState(m01, { m01: true })).toBe("completed");
     expect(missionRecordState(m02, {})).toBe("locked");
-    // Mission 02 stays locked while it is still in development.
-    expect(missionRecordState(m02, { m01: true })).toBe("locked");
+    expect(m02.availability).toBe("playable");
+    expect(m02.path).toBe("/mission-02");
+    expect(missionRecordState(m02, { m01: true })).toBe("unlocked");
+    expect(missionRecordState(m02, { m01: true, m02: true })).toBe("completed");
   });
 
   it("reset save clears mission progress", () => {
