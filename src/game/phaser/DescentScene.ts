@@ -161,7 +161,9 @@ export class DescentScene extends Phaser.Scene {
   }
 
   // ------------------------------------------------------------------ loop
-  override update(_time: number, deltaMs: number) {
+  override update(_time: number, _smoothedDelta: number) {
+    // Use the real frame time (Phaser's smoothed delta slows physics on low-frame-rate PCs); capped for tab switches.
+    const deltaMs = this.game.loop.rawDelta;
     const st = m02Store.get();
     const flying = st.descent.status === "flying" && !this.done;
     if (flying && st.overlay === null) {
