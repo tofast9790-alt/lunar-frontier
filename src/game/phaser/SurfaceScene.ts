@@ -83,7 +83,9 @@ export class SurfaceScene extends Phaser.Scene {
 
   private fitCamera(w: number, h: number) {
     const cam = this.cameras.main;
-    cam.setZoom(Phaser.Math.Clamp(Math.min(w / 1150, h / 820), 0.7, 1.4));
+    // Never zoom out past the world edge, so tall or wide screens stay filled with ground.
+    const cover = Math.max(w / SURFACE.width, h / SURFACE.height);
+    cam.setZoom(Math.max(cover, Phaser.Math.Clamp(Math.min(w / 1150, h / 820), 0.7, 1.4)));
     cam.setBounds(0, 0, SURFACE.width, SURFACE.height);
     if (this.player) cam.startFollow(this.player, true, 0.1, 0.1);
   }

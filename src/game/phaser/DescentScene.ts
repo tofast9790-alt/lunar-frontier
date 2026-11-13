@@ -101,7 +101,8 @@ export class DescentScene extends Phaser.Scene {
   private drawTerrain() {
     const g = this.add.graphics().setDepth(0);
     const E = EXTENT * PX;
-    g.fillStyle(GROUND, 1).fillRect(-E, -E, E * 2, E * 2);
+    // Ground extends well past the flight boundary so wide/tall screens never show empty space.
+    g.fillStyle(GROUND, 1).fillRect(-E * 4, -E * 4, E * 8, E * 8);
 
     // Soft regolith mottling.
     const rand = new Phaser.Math.RandomDataGenerator(["lunar-frontier-m02"]);

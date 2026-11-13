@@ -135,7 +135,8 @@ export function setPhase(phase: Phase) {
   if (phase === "site" && !canSelectSite(s.cockpit)) return;
   if (phase === "descent" && !canBeginDescent(s.cockpit, s.site.chosen)) return;
   if (phase === "surface" && !s.descent.landing) return;
-  m02Store.set({ phase, overlay: null, nearby: null });
+  // Unread chatter from the previous step stays in the log but leaves the live panel.
+  m02Store.set({ phase, overlay: null, nearby: null, commsQueue: [] });
   if (phase === "cockpit") {
     say(LINES.cockpitStart);
     say(LINES.aresCockpit);
