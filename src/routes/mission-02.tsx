@@ -44,6 +44,7 @@ export const Route = createFileRoute("/mission-02")({
 
 const M02_META = MISSIONS.find((m) => m.id === "m02")!;
 const PLAY_PHASES = new Set(["cockpit", "site", "descent", "surface"]);
+const PAUSABLE_PHASES = new Set(["briefing", ...PLAY_PHASES]);
 
 /** Close a panel and drop focus so Enter/Space don't re-trigger the last button. */
 function closePanel() {
@@ -110,7 +111,7 @@ function Mission02Game() {
       if (e.code === "Escape") {
         e.preventDefault();
         if (st.overlay) closePanel();
-        else if (PLAY_PHASES.has(st.phase)) {
+        else if (PAUSABLE_PHASES.has(st.phase)) {
           clearMovement();
           openOverlay({ kind: "pause" });
         }
